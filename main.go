@@ -4,6 +4,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -45,6 +46,7 @@ func initDB() {
 func main() {
 	// Inicializa o banco de dados
 	initDB()
+
 	r := gin.Default()
 
 	// Rota para criar um versículo
@@ -52,8 +54,14 @@ func main() {
 	// Rota para pegar um versículo aleatório
 	r.GET("/verses/random", getRandomVerse)
 
-	// Inicia o servidor na porta 8080
-	r.Run() // Escuta e serve em 0.0.0.0:8080
+	// Obtém a porta da variável de ambiente ou usa a 8080 como fallback
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	// Inicia o servidor na porta dinâmica
+	r.Run(":" + port) // Escuta na porta fornecida pelo Cloud Run ou na 8080 como fallback
 }
 
 func createVerse(c *gin.Context) {
