@@ -1,0 +1,13 @@
+### Teste de criação de versículo
+POST http://localhost:8080/verses HTTP/1.1
+Content-Type: application/json
+
+{
+    "livro": "GN",
+    "capitulo": 1,
+    "versiculo": 1,
+    "texto": "No princípio, criou Deus os céus e a terra."
+}
+
+### Teste de versículo aleatório
+GET http://localhost:8080/verses/random HTTP/1.1
